@@ -1,21 +1,814 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feeding Feral Cats</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1c1a16 50%, #0d4a43 100%);
-            color: #fff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Numbers Don't Lie | WildTomorrow</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a7a6e;
+    --teal-light: #2aaa99;
+    --teal-dark: #0d4a43;
+    --crimson: #c0392b;
+    --crimson-light: #e74c3c;
+    --gold: #d4a017;
+    --cream: #f5f0e8;
+    --dark: #1c1a16;
+    --mid: #2a2720;
+    --muted: #7a7060;
+    --border: rgba(255,255,255,0.08);
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+background: #1c1a16;
+}
+
+body {
+background: #1c1a16;
+color: var(–cream);
+font-family: ‘Source Serif 4’, Georgia, serif;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 1000;
+opacity: 0.4;
+}
+
+.page {
+max-width: 1000px;
+margin: 0 auto;
+padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding-bottom: 1.25rem;
+border-bottom: 1px solid var(–border);
+margin-bottom: 2.5rem;
+}
+
+.masthead-left {
+display: flex;
+align-items: center;
+gap: 0.75rem;
+}
+
+.masthead-pip {
+width: 8px;
+height: 32px;
+background: var(–teal-light);
+}
+
+.masthead-brand {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.7rem;
+letter-spacing: 0.22em;
+text-transform: uppercase;
+color: var(–teal-light);
+}
+
+.masthead-tag {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.65rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: rgba(245,240,232,0.25);
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+margin-bottom: 3rem;
+text-align: center;
+}
+
+.page-eyebrow {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.68rem;
+letter-spacing: 0.28em;
+text-transform: uppercase;
+color: var(–crimson-light);
+margin-bottom: 0.75rem;
+}
+
+.page-title {
+font-family: ‘Oswald’, sans-serif;
+font-size: clamp(2rem, 5vw, 3rem);
+font-weight: 700;
+line-height: 1.05;
+margin-bottom: 0.9rem;
+}
+
+.page-title em {
+color: var(–gold);
+font-style: normal;
+}
+
+.page-subtitle {
+font-size: 1rem;
+color: rgba(245,240,232,0.55);
+line-height: 1.65;
+max-width: 540px;
+margin: 0 auto;
+font-style: italic;
+}
+
+/* ── PANEL TABS ── */
+.panel-tabs {
+display: flex;
+gap: 0;
+margin-bottom: 2rem;
+border-bottom: 2px solid var(–border);
+}
+
+.tab-btn {
+padding: 0.75rem 1.5rem;
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.78rem;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+background: none;
+border: none;
+color: rgba(245,240,232,0.35);
+cursor: pointer;
+border-bottom: 2px solid transparent;
+margin-bottom: -2px;
+transition: all 0.2s ease;
+white-space: nowrap;
+}
+
+.tab-btn:hover { color: rgba(245,240,232,0.7); }
+
+.tab-btn.active {
+color: var(–cream);
+border-bottom-color: var(–teal-light);
+}
+
+.tab-btn.active.crimson { border-bottom-color: var(–crimson-light); }
+
+/* ── PANELS ── */
+.panel {
+display: none;
+animation: fadeUp 0.3s ease;
+}
+
+.panel.active { display: block; }
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(10px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PANEL HEADER ── */
+.panel-header {
+margin-bottom: 2rem;
+}
+
+.panel-number {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.65rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: rgba(245,240,232,0.3);
+margin-bottom: 0.4rem;
+}
+
+.panel-title {
+font-family: ‘Oswald’, sans-serif;
+font-size: clamp(1.4rem, 3.5vw, 2rem);
+font-weight: 700;
+line-height: 1.1;
+margin-bottom: 0.5rem;
+}
+
+.panel-title .accent-teal { color: var(–teal-light); }
+.panel-title .accent-red  { color: var(–crimson-light); }
+
+.panel-desc {
+font-size: 0.9rem;
+color: rgba(245,240,232,0.5);
+font-style: italic;
+line-height: 1.6;
+}
+
+/* ── CHART LAYOUT ── */
+.chart-layout {
+display: grid;
+grid-template-columns: 280px 1fr;
+gap: 2.5rem;
+align-items: start;
+margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+.chart-layout {
+grid-template-columns: 1fr;
+gap: 1.5rem;
+}
+}
+
+/* ── DONUT ── */
+.donut-wrap {
+position: relative;
+width: 100%;
+aspect-ratio: 1;
+max-width: 260px;
+margin: 0 auto;
+}
+
+.donut-svg {
+width: 100%;
+height: 100%;
+transform: rotate(-90deg);
+filter: drop-shadow(0 6px 28px rgba(0,0,0,0.5));
+}
+
+.donut-segment {
+fill: none;
+stroke-width: 26;
+cursor: pointer;
+transition: stroke-width 0.2s ease, opacity 0.2s ease;
+}
+
+.donut-segment:hover, .donut-segment.active { stroke-width: 34; }
+.donut-segment.dimmed { opacity: 0.2; }
+
+.donut-center {
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%,-50%);
+text-align: center;
+pointer-events: none;
+}
+
+.donut-pct {
+font-family: ‘Oswald’, sans-serif;
+font-size: 2.6rem;
+font-weight: 700;
+line-height: 1;
+transition: color 0.2s ease;
+}
+
+.donut-sublabel {
+font-size: 0.7rem;
+color: rgba(245,240,232,0.4);
+letter-spacing: 0.04em;
+margin-top: 0.2rem;
+font-style: italic;
+}
+
+/* ── LEGEND ── */
+.legend {
+display: flex;
+flex-direction: column;
+gap: 0.4rem;
+}
+
+.legend-item {
+display: flex;
+align-items: center;
+gap: 0.85rem;
+padding: 0.7rem 0.9rem;
+border-radius: 4px;
+cursor: pointer;
+border: 1px solid transparent;
+transition: all 0.18s ease;
+position: relative;
+overflow: hidden;
+}
+
+.legend-item:hover,
+.legend-item.active {
+border-color: var(–border);
+background: rgba(255,255,255,0.04);
+}
+
+.legend-swatch {
+width: 12px;
+height: 12px;
+border-radius: 2px;
+flex-shrink: 0;
+}
+
+.legend-name {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.85rem;
+font-weight: 600;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+flex: 1;
+color: var(–cream);
+}
+
+.legend-val {
+font-family: ‘Oswald’, sans-serif;
+font-size: 1.35rem;
+font-weight: 700;
+line-height: 1;
+}
+
+.legend-bar-track {
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 2px;
+background: rgba(255,255,255,0.05);
+}
+
+.legend-bar-fill {
+height: 100%;
+transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── DETAIL BOX ── */
+.detail-box {
+background: rgba(255,255,255,0.03);
+border: 1px solid var(–border);
+border-radius: 6px;
+padding: 1.25rem 1.4rem;
+margin-bottom: 1.75rem;
+min-height: 100px;
+}
+
+.detail-inner {
+opacity: 0;
+transform: translateY(5px);
+transition: all 0.22s ease;
+}
+
+.detail-inner.show {
+opacity: 1;
+transform: translateY(0);
+}
+
+.detail-head {
+font-family: ‘Oswald’, sans-serif;
+font-size: 1.15rem;
+font-weight: 700;
+margin-bottom: 0.45rem;
+display: flex;
+align-items: center;
+gap: 0.6rem;
+}
+
+.detail-dot {
+width: 10px;
+height: 10px;
+border-radius: 50%;
+flex-shrink: 0;
+}
+
+.detail-text {
+font-size: 0.88rem;
+line-height: 1.68;
+color: rgba(245,240,232,0.68);
+}
+
+.detail-empty {
+font-style: italic;
+color: rgba(245,240,232,0.28);
+font-size: 0.85rem;
+padding-top: 0.25rem;
+}
+
+/* ── HINT ── */
+.hint {
+font-size: 0.73rem;
+color: rgba(245,240,232,0.25);
+font-style: italic;
+text-align: center;
+margin-bottom: 1.25rem;
+}
+
+/* ── STAT ROW ── */
+.stat-row {
+display: grid;
+gap: 0.75rem;
+margin-bottom: 1.75rem;
+}
+
+.stat-row-3 { grid-template-columns: repeat(3,1fr); }
+.stat-row-2 { grid-template-columns: repeat(2,1fr); }
+
+@media (max-width: 500px) {
+.stat-row-3, .stat-row-2 { grid-template-columns: 1fr 1fr; }
+}
+
+.stat-card {
+background: rgba(255,255,255,0.03);
+border: 1px solid var(–border);
+border-radius: 6px;
+padding: 1rem;
+text-align: center;
+}
+
+.stat-num {
+font-family: ‘Oswald’, sans-serif;
+font-size: 1.9rem;
+font-weight: 700;
+line-height: 1;
+margin-bottom: 0.35rem;
+}
+
+.stat-num.teal   { color: var(–teal-light); }
+.stat-num.red    { color: var(–crimson-light); }
+.stat-num.gold   { color: var(–gold); }
+.stat-num.grey   { color: #aaa; }
+
+.stat-lbl {
+font-size: 0.72rem;
+color: rgba(245,240,232,0.42);
+line-height: 1.45;
+text-transform: uppercase;
+letter-spacing: 0.07em;
+}
+
+/* ── CALLOUT ── */
+.callout {
+border-left: 3px solid;
+padding: 1rem 1.25rem;
+margin-bottom: 1.75rem;
+border-radius: 0 4px 4px 0;
+font-size: 0.9rem;
+line-height: 1.65;
+color: rgba(245,240,232,0.72);
+font-style: italic;
+}
+
+.callout.teal {
+border-color: var(–teal-light);
+background: rgba(26,122,110,0.1);
+}
+
+.callout.red {
+border-color: var(–crimson-light);
+background: rgba(192,57,43,0.1);
+}
+
+.callout strong { font-style: normal; }
+.callout.teal strong { color: var(–teal-light); }
+.callout.red   strong { color: var(–crimson-light); }
+
+/* ── DIVIDER ── */
+.panel-divider {
+border: none;
+border-top: 1px solid var(–border);
+margin: 2rem 0;
+}
+
+/* ── SOURCE ── */
+.source-note {
+font-size: 0.72rem;
+color: rgba(245,240,232,0.28);
+line-height: 1.6;
+border-top: 1px solid var(–border);
+padding-top: 1.25rem;
+margin-top: 1rem;
+}
+
+.source-tag {
+font-family: ‘Oswald’, sans-serif;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–teal-light);
+margin-right: 0.5rem;
+}
+
+/* ── BOTTOM CTA ── */
+.bottom-cta {
+text-align: center;
+padding: 2rem 0 0.5rem;
+border-top: 1px solid var(–border);
+margin-top: 3rem;
+}
+
+.bottom-cta p {
+font-size: 0.8rem;
+color: rgba(245,240,232,0.3);
+font-style: italic;
+line-height: 1.6;
+}
+
+.bottom-cta strong {
+color: var(–teal-light);
+font-style: normal;
+}
+</style>
+
 </head>
 <body>
-    <h1>Welcome to Feeding Feral Cats</h1>
-    <p>This is a webpage to help in feeding feral cats.</p>
+<div class="page">
+
+  <!-- MASTHEAD -->
+
+  <div class="masthead">
+    <div class="masthead-left">
+      <div class="masthead-pip"></div>
+      <span class="masthead-brand">WildTomorrow</span>
+    </div>
+    <span class="masthead-tag">Data &nbsp;/&nbsp; Wildlife &nbsp;/&nbsp; Texas</span>
+  </div>
+
+  <!-- PAGE HEADER -->
+
+  <div class="page-header">
+    <div class="page-eyebrow">The Numbers Don't Lie</div>
+    <h1 class="page-title">Good Intentions,<br><em>Bad Outcomes</em></h1>
+    <p class="page-subtitle">Two datasets. Two problems. One very preventable chain of events.</p>
+  </div>
+
+  <!-- TABS -->
+
+  <div class="panel-tabs">
+    <button class="tab-btn active" onclick="switchPanel('feeding', this)">
+      🐱 Who Eats the Cat Food
+    </button>
+    <button class="tab-btn crimson" onclick="switchPanel('relocation', this)">
+      🦝 Raccoon Relocation Survival
+    </button>
+  </div>
+
+  <!-- PANEL 1: FEEDING STATION -->
+
+  <div class="panel active" id="panel-feeding">
+    <div class="panel-header">
+      <div class="panel-number">Panel 01 of 02</div>
+      <h2 class="panel-title">Who's Actually Eating<br>the <span class="accent-teal">Cat Food?</span></h2>
+      <p class="panel-desc">Percentage of visits to a monitored feral cat feeding station, by species. Source: Urban Wildlife Research Project.</p>
+    </div>
+
+```
+<p class="hint">Click or tap a segment or animal to explore</p>
+
+<div class="chart-layout">
+  <div class="donut-wrap">
+    <svg class="donut-svg" viewBox="0 0 200 200" id="donut-feeding">
+      <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="26"/>
+    </svg>
+    <div class="donut-center">
+      <div class="donut-pct" id="feed-pct" style="color:var(--cream)">100%</div>
+      <div class="donut-sublabel" id="feed-lbl">of visits</div>
+    </div>
+  </div>
+  <div class="legend" id="legend-feeding"></div>
+</div>
+
+<div class="detail-box">
+  <div class="detail-inner show" id="detail-feeding">
+    <p class="detail-empty">Select an animal above to learn more.</p>
+  </div>
+</div>
+
+<div class="stat-row stat-row-3">
+  <div class="stat-card">
+    <div class="stat-num red">96%</div>
+    <div class="stat-lbl">of visits by wildlife, not cats</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num gold">4%</div>
+    <div class="stat-lbl">of visits by the cats it was meant for</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num teal">100x</div>
+    <div class="stat-lbl">denser than native predators when humans subsidize cats</div>
+  </div>
+</div>
+
+<div class="callout teal">
+  <p>Cat colonies form around food sources and grow to the limits of the food supply. So do raccoon populations. <strong>If you've been putting food out for months and now have a raccoon convention on your property, the food is not incidental to that situation. The food is the situation.</strong></p>
+</div>
+
+<div class="source-note">
+  <span class="source-tag">Source</span> Urban Wildlife Research Project, "Feeding the Feral: A Study on Feral Cat's Environmental Impact." Population density data: The Wildlife Society Issue Statement on Free-Ranging and Feral Cats. Visualization by Katie Byers | WildTomorrow.
+</div>
+```
+
+  </div>
+
+  <!-- PANEL 2: RELOCATION SURVIVAL -->
+
+  <div class="panel" id="panel-relocation">
+    <div class="panel-header">
+      <div class="panel-number">Panel 02 of 02</div>
+      <h2 class="panel-title">Raccoon Relocation:<br><span class="accent-red">A Death Sentence</span></h2>
+      <p class="panel-desc">Survival outcomes for relocated raccoons, based on 15 years of GPS translocation studies and peer-reviewed mortality data.</p>
+    </div>
+
+```
+<p class="hint">Click or tap a segment to explore</p>
+
+<div class="chart-layout">
+  <div class="donut-wrap">
+    <svg class="donut-svg" viewBox="0 0 200 200" id="donut-relocation">
+      <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="26"/>
+    </svg>
+    <div class="donut-center">
+      <div class="donut-pct" id="reloc-pct" style="color:var(--cream)">100%</div>
+      <div class="donut-sublabel" id="reloc-lbl">relocated</div>
+    </div>
+  </div>
+  <div class="legend" id="legend-relocation"></div>
+</div>
+
+<div class="detail-box">
+  <div class="detail-inner show" id="detail-relocation">
+    <p class="detail-empty">Select a segment above to learn more.</p>
+  </div>
+</div>
+
+<div class="stat-row stat-row-2">
+  <div class="stat-card">
+    <div class="stat-num red">50%</div>
+    <div class="stat-lbl">dead within 3 months of release</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num grey">75%</div>
+    <div class="stat-lbl">dead within 1 year of release</div>
+  </div>
+</div>
+
+<div class="stat-row stat-row-2">
+  <div class="stat-card">
+    <div class="stat-num teal">90%+</div>
+    <div class="stat-lbl">of wildlife conflicts resolvable without removal</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num gold">C Misd.</div>
+    <div class="stat-lbl">transporting a raccoon without TPWD authorization in Texas</div>
+  </div>
+</div>
+
+<div class="callout red">
+  <p>Relocating a raccoon does not solve your problem. <strong>Another animal will move into the vacuum you created within days.</strong> The food source is still there. The access point is still there. You have cycled through an animal's life and changed nothing except your own conscience.</p>
+</div>
+
+<div class="source-note">
+  <span class="source-tag">Source</span> Animal Help Now (2021), GPS translocation studies, 15 years. Adams, Hadidian & Flyger, Animal Welfare (2004). Mosillo et al., Journal of Wildlife Management (1999). Texas DSHS Rabies Control & Eradication Administrative Code. Texas Parks & Wildlife Department. Visualization by Katie Byers | WildTomorrow.
+</div>
+```
+
+  </div>
+
+  <!-- BOTTOM -->
+
+  <div class="bottom-cta">
+    <p>Wildlife conflict in Texas? Call TPWD at <strong>(800) 792-1112</strong> &nbsp;|&nbsp; Gulf Coast Wildlife Rescue &nbsp;|&nbsp; NWRA Rehabilitator Directory<br>
+    Read the full investigation at <strong>WildTomorrow on Substack</strong></p>
+  </div>
+
+</div>
+
+<script>
+const CIRC = 2 * Math.PI * 70;
+
+const feedingData = [
+  { id:'skunk',   label:'Skunks',        emoji:'🦨', pct:74, color:'#5a5a5a',
+    detail:'Skunks dominated the feeding station, accounting for nearly three-quarters of all visits. Up to five at a time were observed fighting over the bowl. The most aggressive individual had, per field notes, "a stomach the size of a beach ball." They arrived early and stayed late.' },
+  { id:'raccoon', label:'Raccoons',       emoji:'🦝', pct:15, color:'#1a7a6e',
+    detail:'Raccoons were second in line, consistently arriving after skunks had their fill. Some individuals were visibly overweight from the supplemental food. Raccoons conditioned to artificial food sources become increasingly bold and conflict-prone over time.' },
+  { id:'fox',     label:'Gray Foxes',     emoji:'🦊', pct:7,  color:'#c0392b',
+    detail:'Gray foxes made up 7% of feeder visits and were, notably, the most polite guests. They arrived early, shared the bowl willingly, and immediately gave it up if a skunk or raccoon entered the area. Wildlife has its own hierarchy. Humans just set the table.' },
+  { id:'other',   label:'Other Wildlife', emoji:'🐦', pct:4,  color:'#8b6914',
+    detail:'Birds including California Towhees and Oak Titmice were observed taking cat food back to nests to feed their young. Researchers found cat food kibble in the scat of raccoons and gray foxes. The station had become a de facto community wildlife feeder.' },
+  { id:'cat',     label:'Feral Cats',     emoji:'🐱', pct:4,  color:'#d4a017',
+    detail:'Four percent. The animals the station was designed to feed accounted for just 4% of all visits, equal to "other wildlife." They frequently arrived to find an empty bowl. The cats were, in the most literal sense, last in line at their own buffet.' },
+];
+
+const relocationData = [
+  { id:'dead3mo',  label:'Dead by 3 months',  emoji:'💀', pct:50, color:'#c0392b',
+    detail:'Half of all relocated raccoons are dead within three months of release. Causes include starvation in unfamiliar territory, predation from animals that know the landscape and the raccoon does not, and violent confrontations with resident raccoons defending established ranges.' },
+  { id:'dead1yr',  label:'Dead by 1 year',     emoji:'☠️', pct:25, color:'#8b3a2a',
+    detail:'Studies suggest up to 75% total mortality within one year of relocation. This additional 25% represents animals that survived initial release but could not establish stable territory, find adequate food, or avoid continued conflict with resident wildlife.' },
+  { id:'survive',  label:'Survive long-term',  emoji:'✅', pct:18, color:'#1a7a6e',
+    detail:'Only 18% of relocated raccoons survive long-term, based on 15 years of GPS translocation research. These are the animals the "humane" framing is built on. They are the rare exception, not the expected outcome. Most people setting traps do not know this number.' },
+  { id:'unknown',  label:'Unknown outcome',    emoji:'❓', pct:7,  color:'#5a5248',
+    detail:'A portion of relocated animals are lost to tracking entirely, either through tag failure or movement beyond study boundaries. Unknown outcome is not the same as survival. These animals left a familiar range disoriented, stressed, and without resources. The odds were not in their favor.' },
+];
+
+const state = {
+  feeding: null,
+  relocation: null,
+};
+
+function buildPanel(panelId, data, svgId, legendId, pctId, lblId, detailId) {
+  const svg = document.getElementById(svgId);
+  let offset = 0;
+  data.forEach(d => {
+    const dash = (d.pct / 100) * CIRC;
+    const gap  = CIRC - dash;
+    const seg  = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    seg.setAttribute('cx','100'); seg.setAttribute('cy','100'); seg.setAttribute('r','70');
+    seg.setAttribute('class','donut-segment');
+    seg.setAttribute('stroke', d.color);
+    seg.setAttribute('stroke-dasharray', `${dash} ${gap}`);
+    seg.setAttribute('stroke-dashoffset', `-${offset * CIRC / 100}`);
+    seg.setAttribute('data-id', d.id);
+    seg.addEventListener('click',      () => toggle(panelId, d.id, data, svgId, legendId, pctId, lblId, detailId));
+    seg.addEventListener('mouseenter', () => { if (!state[panelId]) preview(d, svgId, legendId, pctId, lblId); });
+    seg.addEventListener('mouseleave', () => { if (!state[panelId]) reset(svgId, legendId, pctId, lblId); });
+    svg.appendChild(seg);
+    offset += d.pct;
+  });
+
+  const legend = document.getElementById(legendId);
+  data.forEach(d => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.dataset.id = d.id;
+    item.innerHTML = `
+      <div class="legend-swatch" style="background:${d.color}"></div>
+      <span class="legend-name">${d.emoji} ${d.label}</span>
+      <span class="legend-val" style="color:${d.color}">${d.pct}%</span>
+      <div class="legend-bar-track">
+        <div class="legend-bar-fill" style="background:${d.color};width:${d.pct}%"></div>
+      </div>`;
+    item.addEventListener('click',      () => toggle(panelId, d.id, data, svgId, legendId, pctId, lblId, detailId));
+    item.addEventListener('mouseenter', () => { if (!state[panelId]) preview(d, svgId, legendId, pctId, lblId); });
+    item.addEventListener('mouseleave', () => { if (!state[panelId]) reset(svgId, legendId, pctId, lblId); });
+    legend.appendChild(item);
+  });
+}
+
+function toggle(panelId, id, data, svgId, legendId, pctId, lblId, detailId) {
+  if (state[panelId] === id) {
+    state[panelId] = null;
+    reset(svgId, legendId, pctId, lblId);
+    clearDetail(detailId);
+  } else {
+    state[panelId] = id;
+    const d = data.find(x => x.id === id);
+    preview(d, svgId, legendId, pctId, lblId);
+    showDetail(d, detailId);
+  }
+}
+
+function preview(d, svgId, legendId, pctId, lblId) {
+  document.getElementById(pctId).textContent  = d.pct + '%';
+  document.getElementById(pctId).style.color  = d.color;
+  document.getElementById(lblId).textContent  = d.label;
+  document.querySelectorAll(`#${svgId} .donut-segment`).forEach(s => {
+    s.classList.toggle('active', s.dataset.id === d.id);
+    s.classList.toggle('dimmed', s.dataset.id !== d.id);
+  });
+  document.querySelectorAll(`#${legendId} .legend-item`).forEach(item => {
+    item.classList.toggle('active', item.dataset.id === d.id);
+  });
+}
+
+function reset(svgId, legendId, pctId, lblId) {
+  document.getElementById(pctId).textContent = '100%';
+  document.getElementById(pctId).style.color = 'var(--cream)';
+  document.getElementById(lblId).textContent = svgId === 'donut-feeding' ? 'of visits' : 'relocated';
+  document.querySelectorAll(`#${svgId} .donut-segment`).forEach(s => s.classList.remove('active','dimmed'));
+  document.querySelectorAll(`#${legendId} .legend-item`).forEach(i => i.classList.remove('active'));
+}
+
+function showDetail(d, detailId) {
+  const el = document.getElementById(detailId);
+  el.classList.remove('show');
+  setTimeout(() => {
+    el.innerHTML = `
+      <div class="detail-head">
+        <div class="detail-dot" style="background:${d.color}"></div>
+        ${d.emoji} ${d.label} — ${d.pct}%
+      </div>
+      <p class="detail-text">${d.detail}</p>`;
+    el.classList.add('show');
+  }, 140);
+}
+
+function clearDetail(detailId) {
+  const el = document.getElementById(detailId);
+  el.classList.remove('show');
+  setTimeout(() => {
+    el.innerHTML = '<p class="detail-empty">Select a segment above to learn more.</p>';
+    el.classList.add('show');
+  }, 160);
+}
+
+function switchPanel(panelId, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + panelId).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Build both panels
+buildPanel('feeding',    feedingData,    'donut-feeding',    'legend-feeding',    'feed-pct',  'feed-lbl',  'detail-feeding');
+buildPanel('relocation', relocationData, 'donut-relocation', 'legend-relocation', 'reloc-pct', 'reloc-lbl', 'detail-relocation');
+</script>
+
 </body>
 </html>
