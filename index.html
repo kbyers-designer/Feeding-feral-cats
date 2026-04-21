@@ -27,9 +27,9 @@ html {
 background: #1c1a16;
 }
 
-body {
+html, body {
 background: #1c1a16;
-color: var(–cream);
+color: #f5f0e8;
 font-family: ‘Source Serif 4’, Georgia, serif;
 min-height: 100vh;
 overflow-x: hidden;
@@ -57,7 +57,7 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 padding-bottom: 1.25rem;
-border-bottom: 1px solid var(–border);
+border-bottom: 1px solid rgba(255,255,255,0.08);
 margin-bottom: 2.5rem;
 }
 
@@ -70,7 +70,7 @@ gap: 0.75rem;
 .masthead-pip {
 width: 8px;
 height: 32px;
-background: var(–teal-light);
+background: #2aaa99;
 }
 
 .masthead-brand {
@@ -78,7 +78,7 @@ font-family: ‘Oswald’, sans-serif;
 font-size: 0.7rem;
 letter-spacing: 0.22em;
 text-transform: uppercase;
-color: var(–teal-light);
+color: #2aaa99;
 }
 
 .masthead-tag {
@@ -100,7 +100,7 @@ font-family: ‘Oswald’, sans-serif;
 font-size: 0.68rem;
 letter-spacing: 0.28em;
 text-transform: uppercase;
-color: var(–crimson-light);
+color: #e74c3c;
 margin-bottom: 0.75rem;
 }
 
@@ -113,7 +113,7 @@ margin-bottom: 0.9rem;
 }
 
 .page-title em {
-color: var(–gold);
+color: #d4a017;
 font-style: normal;
 }
 
@@ -153,11 +153,11 @@ white-space: nowrap;
 .tab-btn:hover { color: rgba(245,240,232,0.7); }
 
 .tab-btn.active {
-color: var(–cream);
-border-bottom-color: var(–teal-light);
+color: #f5f0e8;
+border-bottom-color: #2aaa99;
 }
 
-.tab-btn.active.crimson { border-bottom-color: var(–crimson-light); }
+.tab-btn.active.crimson { border-bottom-color: #e74c3c; }
 
 /* ── PANELS ── */
 .panel {
@@ -194,8 +194,8 @@ line-height: 1.1;
 margin-bottom: 0.5rem;
 }
 
-.panel-title .accent-teal { color: var(–teal-light); }
-.panel-title .accent-red  { color: var(–crimson-light); }
+.panel-title .accent-teal { color: #2aaa99; }
+.panel-title .accent-red  { color: #e74c3c; }
 
 .panel-desc {
 font-size: 0.9rem;
@@ -292,7 +292,7 @@ overflow: hidden;
 
 .legend-item:hover,
 .legend-item.active {
-border-color: var(–border);
+border-color: rgba(255,255,255,0.08);
 background: rgba(255,255,255,0.04);
 }
 
@@ -310,7 +310,7 @@ font-weight: 600;
 letter-spacing: 0.06em;
 text-transform: uppercase;
 flex: 1;
-color: var(–cream);
+color: #f5f0e8;
 }
 
 .legend-val {
@@ -335,7 +335,7 @@ transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
 /* ── DETAIL BOX ── */
 .detail-box {
 background: rgba(255,255,255,0.03);
-border: 1px solid var(–border);
+border: 1px solid rgba(255,255,255,0.08);
 border-radius: 6px;
 padding: 1.25rem 1.4rem;
 margin-bottom: 1.75rem;
@@ -408,7 +408,7 @@ margin-bottom: 1.75rem;
 
 .stat-card {
 background: rgba(255,255,255,0.03);
-border: 1px solid var(–border);
+border: 1px solid rgba(255,255,255,0.08);
 border-radius: 6px;
 padding: 1rem;
 text-align: center;
@@ -422,9 +422,9 @@ line-height: 1;
 margin-bottom: 0.35rem;
 }
 
-.stat-num.teal   { color: var(–teal-light); }
-.stat-num.red    { color: var(–crimson-light); }
-.stat-num.gold   { color: var(–gold); }
+.stat-num.teal   { color: #2aaa99; }
+.stat-num.red    { color: #e74c3c; }
+.stat-num.gold   { color: #d4a017; }
 .stat-num.grey   { color: #aaa; }
 
 .stat-lbl {
@@ -448,23 +448,23 @@ font-style: italic;
 }
 
 .callout.teal {
-border-color: var(–teal-light);
+border-color: #2aaa99;
 background: rgba(26,122,110,0.1);
 }
 
 .callout.red {
-border-color: var(–crimson-light);
+border-color: #e74c3c;
 background: rgba(192,57,43,0.1);
 }
 
 .callout strong { font-style: normal; }
-.callout.teal strong { color: var(–teal-light); }
-.callout.red   strong { color: var(–crimson-light); }
+.callout.teal strong { color: #2aaa99; }
+.callout.red   strong { color: #e74c3c; }
 
 /* ── DIVIDER ── */
 .panel-divider {
 border: none;
-border-top: 1px solid var(–border);
+border-top: 1px solid rgba(255,255,255,0.08);
 margin: 2rem 0;
 }
 
@@ -473,7 +473,7 @@ margin: 2rem 0;
 font-size: 0.72rem;
 color: rgba(245,240,232,0.28);
 line-height: 1.6;
-border-top: 1px solid var(–border);
+border-top: 1px solid rgba(255,255,255,0.08);
 padding-top: 1.25rem;
 margin-top: 1rem;
 }
@@ -482,7 +482,7 @@ margin-top: 1rem;
 font-family: ‘Oswald’, sans-serif;
 letter-spacing: 0.12em;
 text-transform: uppercase;
-color: var(–teal-light);
+color: #2aaa99;
 margin-right: 0.5rem;
 }
 
@@ -490,7 +490,7 @@ margin-right: 0.5rem;
 .bottom-cta {
 text-align: center;
 padding: 2rem 0 0.5rem;
-border-top: 1px solid var(–border);
+border-top: 1px solid rgba(255,255,255,0.08);
 margin-top: 3rem;
 }
 
@@ -502,7 +502,7 @@ line-height: 1.6;
 }
 
 .bottom-cta strong {
-color: var(–teal-light);
+color: #2aaa99;
 font-style: normal;
 }
 </style>
